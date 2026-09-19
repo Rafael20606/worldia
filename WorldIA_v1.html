@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WorldIA</title>
+<style>
+body{margin:0;font-family:Arial;background:#f3f7f5}.app{max-width:520px;margin:auto;min-height:100vh;background:white;display:flex;flex-direction:column}header{padding:22px;background:#17633e;color:white}.logo{font-size:28px;font-weight:bold}.tag{margin-top:5px}.chat{flex:1;padding:16px}.msg{max-width:85%;padding:12px 14px;border-radius:16px;margin:10px 0;line-height:1.4}.bot{background:#edf3ef}.user{background:#278453;color:white;margin-left:auto}.quick{display:flex;gap:7px;overflow:auto;padding:8px 12px}.quick button{white-space:nowrap;padding:9px;border:1px solid #ccd9d1;border-radius:20px;background:white}form{display:flex;gap:8px;padding:12px;border-top:1px solid #ddd}input{flex:1;padding:13px;border:1px solid #ccd7d1;border-radius:24px;font-size:16px}button.send{width:48px;border:0;border-radius:50%;background:#278453;color:white;font-size:19px}.small{text-align:center;font-size:12px;color:#718078;padding:4px 12px 12px}
+</style>
+</head>
+<body>
+<div class="app">
+<header><div class="logo">🌍 WorldIA</div><div class="tag">Descubra o mundo dos animais.</div></header>
+<div id="chat" class="chat"><div class="msg bot">Olá! 👋 Eu sou o <b>WorldIA</b>. Pergunte sobre animais, habitats, alimentação, comportamento ou descreva um animal.</div></div>
+<div class="quick">
+<button onclick="ask('Fala-me sobre guppies')">🐟 Peixes</button>
+<button onclick="ask('Fala-me sobre cães')">🐶 Cães</button>
+<button onclick="ask('Fala-me sobre leões')">🦁 Selvagens</button>
+<button onclick="ask('Quero identificar um animal')">📸 Identificar</button>
+</div>
+<form onsubmit="send(event)"><input id="input" placeholder="Pergunte ao WorldIA..."><button class="send">➤</button></form>
+<div class="small">WorldIA v1 — protótipo demonstrativo.</div>
+</div>
+<script>
+const chat=document.getElementById('chat'),input=document.getElementById('input');
+function add(t,c){let d=document.createElement('div');d.className='msg '+c;d.innerHTML=t;chat.appendChild(d);chat.scrollTop=chat.scrollHeight}
+function ask(q){input.value=q;send(new Event('submit'))}
+function answer(q){
+ q=q.toLowerCase();
+ if(q.includes('guppi')||q.includes('peixe'))return '🐟 Guppies são pequenos peixes de água doce muito populares em aquários. As fêmeas costumam ser maiores e mais arredondadas; os machos geralmente têm caudas mais coloridas.';
+ if(q.includes('cão')||q.includes('cachorro'))return '🐶 Cães são mamíferos domesticados. Posso falar sobre comportamento, alimentação, cuidados e características.';
+ if(q.includes('leão'))return '🦁 O leão é um grande felino social, encontrado naturalmente sobretudo na África, com uma pequena população na Índia.';
+ if(q.includes('identificar')||q.includes('animal'))return '📸 Nesta v1 ainda não tenho análise automática de imagens. Descreva o animal: cor, tamanho, formato e onde o encontrou.';
+ return '🌍 Boa pergunta! Sou o protótipo do WorldIA. Posso conversar sobre espécies, habitats, alimentação, comportamento e curiosidades. A próxima versão poderá usar uma IA real.';
+}
+function send(e){e.preventDefault();let q=input.value.trim();if(!q)return;add(q,'user');input.value='';setTimeout(()=>add(answer(q),'bot'),300)}
+</script>
+</body>
+</html>
